@@ -8,7 +8,7 @@
 
     packages.x86_64-darwin.default =
       # Notice the reference to nixpkgs here.
-      with import nixpkgs { system = "x86_64-linux"; };
+      with import nixpkgs { system = "x86_64-darwin"; };
       stdenv.mkDerivation {
         name = "hello";
         src = self;
