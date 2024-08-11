@@ -13,6 +13,8 @@
         src = self;
 
         nativeBuildInputs = [ cmake ];
+
+        buildInputs = [ zmqpp ];
       };
   };
 }
