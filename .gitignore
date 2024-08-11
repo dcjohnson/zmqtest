@@ -2,6 +2,9 @@
 *~
 \#*
 
+# other
+build
+
 # Prerequisites
 *.d
 

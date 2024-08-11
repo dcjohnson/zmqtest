@@ -10,10 +10,10 @@
       # Notice the reference to nixpkgs here.
       with import nixpkgs { system = "x86_64-darwin"; };
       stdenv.mkDerivation {
-        name = "hello";
+        name = "ZmqTest";
         src = self;
-        buildPhase = "gcc -o hello ./hello.c";
-        installPhase = "mkdir -p $out/bin; install -t $out/bin hello";
+        # buildPhase = "gcc -o hello ./hello.c";
+        # installPhase = "mkdir -p $out/bin; install -t $out/bin hello";
       };
 
   };
