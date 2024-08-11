@@ -1,31 +1,31 @@
-#include <zmqpp/zmqpp.hpp>
-#include <string>
-#include <iostream>
+//
+//  Demonstrate identities as used by the request-reply pattern.  Run this
+//  program by itself.
+//
 
-using namespace std;
+#include <zmq.hpp>
+#include "zhelpers.hpp"
 
-int main(int argc, char *argv[]) {
-  // initialize the 0MQ context
-  zmqpp::context context;
+int main () {
+    zmq::context_t context(1);
 
-  // create and bind a server socket
-  zmqpp::socket server (context, zmqpp::socket_type::push);
-  server.bind("tcp://*:9000");
+    zmq::socket_t sink(context, ZMQ_ROUTER);
+    sink.bind( "inproc://example");
 
-  // create and connect a client socket
-  zmqpp::socket client (context, zmqpp::socket_type::pull);
-  client.connect("tcp://127.0.0.1:9000");
+    //  First allow 0MQ to set the identity
+    zmq::socket_t anonymous(context, ZMQ_REQ);
+    anonymous.connect( "inproc://example");
 
-  // Send a single message from server to client
-  zmqpp::message request;
-  request << "Hello";
-  server.send(request);
+    s_send (anonymous, std::string("ROUTER uses a generated 5 byte identity"));
+    s_dump (sink);
 
-  zmqpp::message response;
-  client.receive(response);
-  
-  assert("Hello" == response.get(0));
-  std::cout << "Grasslands test OK" << std::endl;
+    //  Then set the identity ourselves
+    zmq::socket_t identified (context, ZMQ_REQ);
+    identified.set( zmq::sockopt::routing_id, "PEER2");
+    identified.connect( "inproc://example");
 
-  return 0;
+    s_send (identified, std::string("ROUTER socket uses REQ's socket identity"));
+    s_dump (sink);
+
+    return 0;
 }

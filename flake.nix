@@ -14,7 +14,7 @@
 
         nativeBuildInputs = [ cmake ];
 
-        buildInputs = [ zmqpp ];
+        buildInputs = [ cppzmq ];
       };
   };
 }

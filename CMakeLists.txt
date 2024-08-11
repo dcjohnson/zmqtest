@@ -4,6 +4,6 @@ project (zmqtest)
 
 add_executable (zmqtest main.cc)
 
-target_link_libraries(zmqtest PUBLIC zmq zmqpp)
+target_link_libraries(zmqtest PUBLIC zmq)
 
 install (TARGETS zmqtest DESTINATION bin)
